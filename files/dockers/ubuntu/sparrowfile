@@ -1,0 +1,26 @@
+my @list = (
+  "procps",
+  "wget", 
+  "zstd",
+  "gcc",
+  "make",
+  "libssl-dev"
+);
+
+for @list -> $p {
+
+  package-install $p
+
+}
+
+zef "https://github.com/melezhik/sparrow6-rakudo-install.git", %( force => True );
+
+my @list2 = (
+); 
+
+
+for @list2 -> $p {
+
+  package-install $p
+
+}
