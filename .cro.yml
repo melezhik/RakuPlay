@@ -1,0 +1,8 @@
+cro: 1
+id: rakuplay
+name: RakuPlay
+entrypoint: app.raku
+ignore:
+  - .cache
+  - utils/
+  - sparky

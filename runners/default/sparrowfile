@@ -1,0 +1,74 @@
+my $user = config()<user>;
+
+my $rakudo-version = config()<rakudo_version>;
+
+my $directory = $*CWD;
+
+my $zef-debug = False; # could be overiden in custom sparrowfile
+
+# Alpine patch
+
+if os() eq 'alpine' {
+
+  # this is needed for alpine rakudo installation
+  unless "/bin/zef".IO ~~ :e {
+    copy "/opt/rakudo-pkg/share/perl6/core/bin/zef", "/bin/zef"
+  }
+
+  # this is needed for alpine rakudo installation
+  unless "/bin/perl6".IO ~~ :e {
+    copy "/opt/rakudo-pkg/bin/perl6", "/bin/perl6"
+  }
+
+}
+
+# ------------------------------------------- INSTALL Rakudo -------------------------------------------------------- #
+
+say "<<< PREPARE Environment >>>";
+
+user $user;
+
+module-run 'Rakudo::Install', %(
+  user => $user,
+  rakudo-version => $rakudo-version,
+  skip-install-dependencies => True
+);
+
+bash Q|sed -i '2 i\($*OUT,$*ERR).map: {.out-buffer = 0}' $(which zef); echo $(which zef); cat $(which zef)|, %(
+  description => "zef patch for user $user",
+  user => $user
+);
+
+# ------------------------------------------- INSTALL Modules -------------------------------------------------------- #
+
+if "{$directory}/Rakufile".IO ~~ :f {
+  say "*** install Raku modules from Rakufile file ***";
+  # install Raku modules from Rakufile file
+  for "{$directory}/Rakufile".IO.lines -> $line {
+    next if $line ~~ /^^ \s* '#' /;
+    next unless $line ~~ /\S/;
+    my @params = $line.split(/\s+/);
+    my $module = @params.shift;
+    my $zef-options = $zef-debug ?? "--debug" !! "";
+    $zef-options ~=  " {@params}" if @params;
+    bash "zef install $module $zef-options", %(
+      description => "zef install $module $zef-options",
+      user => $user,
+      debug => False
+    )
+  }
+}
+
+if "code.raku".IO ~~ :e {
+  say "executing code:";
+  say "=============================";
+  say "code.raku".IO.slurp;
+  EVALFILE "code.raku";
+} else {
+  say "no code passed, exiting ...";
+}
+
+say "===";
+say "RakuPlay: OK";
+
+

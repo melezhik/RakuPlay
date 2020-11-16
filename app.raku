@@ -5,7 +5,6 @@ use RakuPlay;
 
 my $application = route {
 
-
     get -> {
 
       my %conf = get-webui-conf();
@@ -129,6 +128,8 @@ my $application = route {
           if $client eq "webui" {
 
            template 'templates/main.crotmp', %( 
+              code => $code, 
+              modules => $modules, 
               os => $os,
               is-queued => True,
               theme => $theme
@@ -151,7 +152,7 @@ my $application = route {
 }
 
 my Cro::Service $service = Cro::HTTP::Server.new:
-    :host<localhost>, :port<3000>, :$application;
+    :host<localhost>, :port<4001>, :$application;
 
 $service.start;
 
