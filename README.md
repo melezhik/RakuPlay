@@ -1,4 +1,4 @@
-# rakuplay
+# RakuPlay
 
 Run Raku code in different Rakudo environments
 
