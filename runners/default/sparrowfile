@@ -75,10 +75,16 @@ if "files/code.raku".IO ~~ :e {
 
   copy  "files/code.raku", "/tmp/code.{$tm}.raku";
 
+  bash "raku --version ", %(
+	user => $user,
+	description => "raku version"
+  );
+
   bash "timeout 100 raku /tmp/code.{$tm}.raku 1>/tmp/{$tm}.stdout 2>/tmp/{$tm}.stderr && echo > /tmp/{$tm}.ok; : ", %(
 	user => $user,
 	description => "run raku code"
   );
+
   say "";
   say "executing code:";
   say "files/code.raku".IO.slurp;

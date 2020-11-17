@@ -15,7 +15,7 @@ sub queue-build ( %params ) is export {
 
   my $worker-num = (1 .. 3).pick(1);
 
-  my $user = "rakuplay{$worker-num}";
+  my $user = "rkp-{$worker-num}-{$rakudo_version.chop(32)}";
 
   my $description =  "RakuPlay: [$code-description]. Rakudo version: [$rakudo-version-mnemonic]. OS: [$os]";
 

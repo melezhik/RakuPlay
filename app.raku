@@ -134,6 +134,7 @@ my $application = route {
               description => $description,
               modules => $modules, 
               os => $os,
+	      sha => $sha,	
               is-queued => True,
               theme => $theme
            )
