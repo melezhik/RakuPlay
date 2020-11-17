@@ -22,12 +22,12 @@ sub queue-build ( %params ) is export {
 
   my $effective-dir = "{%*ENV<HOME>}/projects/RakuPlay/.cache/{$id}";
 
-  mkdir $effective-dir;
+  mkdir "{$effective-dir}/files";
 
   copy "runners/default/sparrowfile", "{$effective-dir}/sparrowfile";
 
-  spurt "$effective-dir/code.raku", $code;
-  spurt "$effective-dir/Rakufile", $modules;
+  spurt "$effective-dir/files/code.raku", $code;
+  spurt "$effective-dir/files/Rakufile", $modules;
 
   spurt "$effective-dir/config.pl6", "%(
     user => '$user',

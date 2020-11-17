@@ -26,25 +26,35 @@ if os() eq 'alpine' {
 
 say "<<< PREPARE Environment >>>";
 
-user $user;
+if "/home/$user/rakuplay.ok" {
 
-module-run 'Rakudo::Install', %(
-  user => $user,
-  rakudo-version => $rakudo-version,
-  skip-install-dependencies => True
-);
+	say "rakuplay environment already set";
 
-bash Q|sed -i '2 i\($*OUT,$*ERR).map: {.out-buffer = 0}' $(which zef); echo $(which zef); cat $(which zef)|, %(
-  description => "zef patch for user $user",
-  user => $user
-);
+
+} else {
+
+	user $user;
+
+	module-run 'Rakudo::Install', %(
+	  user => $user,
+	  rakudo-version => $rakudo-version,
+	  skip-install-dependencies => True
+	);
+
+	bash Q|sed -i '2 i\($*OUT,$*ERR).map: {.out-buffer = 0}' $(which zef); echo $(which zef); cat $(which zef)|, %(
+	  description => "zef patch for user $user",
+	  user => $user
+	);
+
+	spurt "/home/$user/rakuplay.ok", ""; # we use file to notify that rakuplay env is set, so don't set it next time
+}
 
 # ------------------------------------------- INSTALL Modules -------------------------------------------------------- #
 
-if "{$directory}/Rakufile".IO ~~ :f {
+if "files/Rakufile".IO ~~ :f {
   say "*** install Raku modules from Rakufile file ***";
   # install Raku modules from Rakufile file
-  for "{$directory}/Rakufile".IO.lines -> $line {
+  for "files/Rakufile".IO.lines -> $line {
     next if $line ~~ /^^ \s* '#' /;
     next unless $line ~~ /\S/;
     my @params = $line.split(/\s+/);
@@ -59,11 +69,11 @@ if "{$directory}/Rakufile".IO ~~ :f {
   }
 }
 
-if "code.raku".IO ~~ :e {
+if "files/code.raku".IO ~~ :e {
   say "executing code:";
   say "=============================";
-  say "code.raku".IO.slurp;
-  EVALFILE "code.raku";
+  say "files/code.raku".IO.slurp;
+  EVALFILE "files/code.raku";
 } else {
   say "no code passed, exiting ...";
 }
