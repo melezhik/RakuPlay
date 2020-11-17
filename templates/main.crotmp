@@ -73,7 +73,7 @@
             <div class="field">
               <label class="label">Code Description</label>
               <div class="control">
-                <input class="input" type="text" name="description" placeholder="Code example" value=<.description>>
+                <input class="input" type="text" name="description" placeholder="Code example" value="<.description>">
               </div>
               <p class="help is-success">short code description</p>
             </div>
