@@ -80,15 +80,16 @@
             <div class="field">
               <label class="label">Code</label>
               <div class="control">
-                <textarea class="textarea" type="text" name="code" placeholder="Raku code snippet" rows="10"><.code></textarea>
+                <textarea class="textarea" type="text" name="code" placeholder="Raku code snippet" rows="6"><.code></textarea>
               </div>
             </div>
+              <p class="help is-success">code to run</p>
             <div class="field">
               <label class="label">Modules List</label>
               <div class="control">
                 <textarea class="textarea" type="text" name="modules" placeholder="Raku modules" rows="5"><.modules></textarea>
               </div>
-              <p class="help is-success">See <a href="https://github.com/melezhik/Rakufile" target="_blank">Rakufile</a> specification</p>
+              <p class="help is-success">see <a href="https://github.com/melezhik/Rakufile" target="_blank">Rakufile</a> specification</p>
             </div>
             <div class="field">
               <label class="label">Rakudo SHA</label>

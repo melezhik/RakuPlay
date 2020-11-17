@@ -70,33 +70,51 @@ if "files/Rakufile".IO ~~ :f {
 }
 
 if "files/code.raku".IO ~~ :e {
-  my $tm = time;	
-  file "/tmp/code.{$tm}.raku", %(
-   owner => $user,
-   content =>  "files/code.raku".IO.slurp
-  );	
-  bash "timeout 100 raku /tmp/code.{$tm}.raku 1>/tmp/{$tm}.txt 2>&1; : ", %(
+
+  my $tm = "rakuplay-{time}";	
+
+  copy  "files/code.raku", "/tmp/code.{$tm}.raku";
+
+  bash "timeout 100 raku /tmp/code.{$tm}.raku 1>/tmp/{$tm}.stdout 2>/tmp/{$tm}.stderr && echo > /tmp/{$tm}.ok; : ", %(
 	user => $user,
 	description => "run raku code"
   );
+  say "";
   say "executing code:";
-  say "---";
   say "files/code.raku".IO.slurp;
-  say "---";
-  say "out:";
-  say "---";
-  say "/tmp/{$tm}.txt".IO.slurp;
+  say "";
 
-  unlink "/tmp/{$tm}.txt";
+  if "/tmp/{$tm}.stdout".IO ~~ :e {
+   say "stdout:";
+   say "/tmp/{$tm}.stdout".IO.slurp;
+   say "";
+  }
 
-  unlink "/tmp/code.{$tm}.raku";
+  if "/tmp/{$tm}.stderr".IO ~~ :e {
+   say "stderr:";
+   say "/tmp/{$tm}.stderr".IO.slurp;
+   say "";
+  }
+
+  unlink "/tmp/{$tm}.stdout" if "/tmp/{$tm}.stdout".IO ~~ :e;
+  unlink "/tmp/{$tm}.stderr" if "/tmp/{$tm}.stderr".IO ~~ :e;
+
+  unlink "/tmp/code.{$tm}.raku" if "/tmp/code.{$tm}.raku".IO ~~ :e;
+
+	say "===";
+
+	if  "/tmp/{$tm}.ok".IO ~~ :e {
+	 unlink  "/tmp/{$tm}.ok";
+	 say "RakuPlay: OK";
+
+	} else {
+	 say "RakuPlay: FAIL";
+	 exit(1); 
+	}
 
 } else {
   say "no code passed, exiting ...";
+  exit(0);
 }
-
-
-say "===";
-say "RakuPlay: OK";
 
 
