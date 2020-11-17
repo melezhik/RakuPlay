@@ -87,9 +87,14 @@ if "files/code.raku".IO ~~ :e {
   say "---";
   say "/tmp/{$tm}.txt".IO.slurp;
 
+  unlink "/tmp/{$tm}.txt";
+
+  unlink "/tmp/code.{$tm}.raku";
+
 } else {
   say "no code passed, exiting ...";
 }
+
 
 say "===";
 say "RakuPlay: OK";

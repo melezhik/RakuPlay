@@ -60,7 +60,7 @@ my $application = route {
         "2015.12" => "ec386e5ff54a6e8028e74092d1a41cfccdc531d2"
       );
 
-      request-body -> (:$code, :$modules, :$os = "debian", :$rakudo_version? = "default", :$sha?, :$client = "cli" ) {
+      request-body -> (:$code, :$modules, :$os = "debian", :$rakudo_version? = "default", :$sha?, :$client = "cli", :$description ) {
 
         my $is-error = False; my $error-message;
 
@@ -82,7 +82,8 @@ my $application = route {
 
             template 'templates/main.crotmp', %( 
               code => $code, 
-              modules => $modules, 
+              modules => $modules,
+              description => $description,
               sha => $sha,
               os => $os,
               is-error => True,
@@ -115,7 +116,8 @@ my $application = route {
             my $rakudo-commit-version = $sha ?? $sha !! %rakudo-version-to-sha{$rv};
  
             $trigger = queue-build %(
-              code => $code, 
+              code => $code,
+              description => $description,
               modules => $modules, 
               rakudo_version => $rakudo-commit-version,
               rakudo-version-mnemonic => $rv,  
@@ -129,6 +131,7 @@ my $application = route {
 
            template 'templates/main.crotmp', %( 
               code => $code, 
+              description => $description,
               modules => $modules, 
               os => $os,
               is-queued => True,

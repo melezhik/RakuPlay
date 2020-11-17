@@ -8,13 +8,16 @@ sub queue-build ( %params ) is export {
 
   my $os = %params<os>;
   my $code = %params<code>;
+  my $code-description = %params<description>;
   my $modules = %params<modules>;
   my $rakudo_version = %params<rakudo_version> || "default";
   my $rakudo-version-mnemonic = %params<rakudo-version-mnemonic>;
 
-  my $user = "rakuplay-$rakudo-version-mnemonic";
+  my $worker-num = (1 .. 3).pick(1);
 
-  my $description =  "RakuPlay, $rakudo-version-mnemonic Rakudo version";
+  my $user = "rakuplay{$worker-num}";
+
+  my $description =  "RakuPlay: [$code-description]. Rakudo version: [$rakudo-version-mnemonic]. OS: [$os]";
 
   my $rnd = ('a' .. 'z').pick(20).join('');
 
@@ -35,7 +38,8 @@ sub queue-build ( %params ) is export {
 );\n";
 
 
-  my $sparky-dir = "{%*ENV<HOME>}/projects/RakuDist/sparky/RakuPlay-{(1 .. 3).pick(1)}";
+
+  my $sparky-dir = "{%*ENV<HOME>}/projects/RakuDist/sparky/RakuPlay-{$worker-num}";
 
   mkdir "{$sparky-dir}/.triggers/";
 
