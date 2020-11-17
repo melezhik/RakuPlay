@@ -75,8 +75,9 @@ if "files/code.raku".IO ~~ :e {
    owner => $user,
    content =>  "files/code.raku".IO.slurp
   );	
-  bash "timeout 100 raku /tmp/code.{$tm}.raku 1>/tmp/{$tm}.txt 2>&1", %(
-	user => $user
+  bash "timeout 100 raku /tmp/code.{$tm}.raku 1>/tmp/{$tm}.txt 2>&1; : ", %(
+	user => $user,
+	description => "run raku code"
   );
   say "executing code:";
   say "---";
