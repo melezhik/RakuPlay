@@ -26,9 +26,9 @@ if os() eq 'alpine' {
 
 say "<<< PREPARE Environment >>>";
 
-if "/home/$user/rakuplay.ok" {
+if "/home/$user/rakuplay-{$rakudo-version}.ok".IO ~~ :f {
 
-	say "rakuplay environment already set";
+	say "rakuplay environment already set for rakudo version - [$rakudo-version]";
 
 
 } else {
@@ -46,7 +46,7 @@ if "/home/$user/rakuplay.ok" {
 	  user => $user
 	);
 
-	spurt "/home/$user/rakuplay.ok", ""; # we use file to notify that rakuplay env is set, so don't set it next time
+	spurt "/home/$user/rakuplay-{$rakudo-version}.ok", ""; # we use file to notify that rakuplay env is set, so don't set it next time
 }
 
 # ------------------------------------------- INSTALL Modules -------------------------------------------------------- #
