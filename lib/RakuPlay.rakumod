@@ -27,7 +27,7 @@ sub queue-build ( %params ) is export {
   copy "runners/default/sparrowfile", "{$effective-dir}/sparrowfile";
 
   spurt "$effective-dir/files/code.raku", $code;
-  spurt "$effective-dir/files/Rakufile", $modules;
+  spurt "$effective-dir/files/Rakufile", $modules if $modules;
 
   spurt "$effective-dir/config.pl6", "%(
     user => '$user',

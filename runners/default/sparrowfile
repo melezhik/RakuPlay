@@ -70,10 +70,22 @@ if "files/Rakufile".IO ~~ :f {
 }
 
 if "files/code.raku".IO ~~ :e {
+  my $tm = time;	
+  file "/tmp/code.{$tm}.raku", %(
+   owner => $user,
+   content =>  "files/code.raku".IO.slurp
+  );	
+  bash "timeout 100 raku /tmp/code.{$tm}.raku 1>/tmp/{$tm}.txt 2>&1", %(
+	user => $user
+  );
   say "executing code:";
-  say "=============================";
+  say "---";
   say "files/code.raku".IO.slurp;
-  EVALFILE "files/code.raku";
+  say "---";
+  say "out:";
+  say "---";
+  say "/tmp/{$tm}.txt".IO.slurp;
+
 } else {
   say "no code passed, exiting ...";
 }
