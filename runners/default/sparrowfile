@@ -30,7 +30,6 @@ if "/home/$user/rakuplay-{$rakudo-version}.ok".IO ~~ :f {
 
 	say "rakuplay environment already set for rakudo version - [$rakudo-version]";
 
-
 } else {
 
 	user $user;
@@ -75,14 +74,14 @@ if "files/code.raku".IO ~~ :e {
 
   copy  "files/code.raku", "/tmp/code.{$tm}.raku";
 
-  bash "raku --version ", %(
-	user => $user,
-	description => "raku version"
+  bash "perl6 --version ", %(
+  	user => $user,
+  	description => "raku version"
   );
 
-  bash "timeout 100 raku -e 'say EVALFILE qq[/tmp/code.{$tm}.raku]' 1>/tmp/{$tm}.stdout 2>/tmp/{$tm}.stderr && echo > /tmp/{$tm}.ok; : ", %(
-	user => $user,
-	description => "run raku code"
+  bash "timeout 100 perl6 -e 'say EVALFILE qq[/tmp/code.{$tm}.raku]' 1>/tmp/{$tm}.stdout 2>/tmp/{$tm}.stderr && echo > /tmp/{$tm}.ok; : ", %(
+  	user => $user,
+	  description => "run raku code"
   );
 
   say "";
