@@ -72,14 +72,14 @@ if "files/code.raku".IO ~~ :e {
 
   my $tm = "rakuplay-{time}";	
 
-  copy  "files/code.raku", "/tmp/code.{$tm}.raku";
+  copy  "files/code.raku", "/home/$user/code.{$tm}.raku";
 
   bash "perl6 --version ", %(
   	user => $user,
   	description => "raku version"
   );
 
-  bash "timeout 100 perl6 -e 'say EVALFILE qq[/tmp/code.{$tm}.raku]' 1>/tmp/{$tm}.stdout 2>/tmp/{$tm}.stderr && echo > /tmp/{$tm}.ok; : ", %(
+  bash "timeout 100 perl6 -e 'say EVALFILE qq[code.{$tm}.raku]' 1>{$tm}.stdout 2>{$tm}.stderr && echo > {$tm}.ok; : ", %(
   	user => $user,
 	  description => "run raku code"
   );
@@ -89,27 +89,27 @@ if "files/code.raku".IO ~~ :e {
   say "files/code.raku".IO.slurp;
   say "";
 
-  if "/tmp/{$tm}.stdout".IO ~~ :e {
+  if "/home/$user/{$tm}.stdout".IO ~~ :e {
    say "stdout:";
-   say "/tmp/{$tm}.stdout".IO.slurp;
+   say "/home/$user/{$tm}.stdout".IO.slurp;
    say "";
   }
 
-  if "/tmp/{$tm}.stderr".IO ~~ :e {
+  if "/home/$user/{$tm}.stderr".IO ~~ :e {
    say "stderr:";
-   say "/tmp/{$tm}.stderr".IO.slurp;
+   say "/home/$user/{$tm}.stderr".IO.slurp;
    say "";
   }
 
-  unlink "/tmp/{$tm}.stdout" if "/tmp/{$tm}.stdout".IO ~~ :e;
-  unlink "/tmp/{$tm}.stderr" if "/tmp/{$tm}.stderr".IO ~~ :e;
+  unlink "/home/$user/{$tm}.stdout" if "/home/$user/{$tm}.stdout".IO ~~ :e;
+  unlink "/home/$user/{$tm}.stderr" if "/home/$user/{$tm}.stderr".IO ~~ :e;
 
-  unlink "/tmp/code.{$tm}.raku" if "/tmp/code.{$tm}.raku".IO ~~ :e;
+  unlink "/home/$user/code.{$tm}.raku" if "/home/$user/code.{$tm}.raku".IO ~~ :e;
 
 	say "===";
 
-	if  "/tmp/{$tm}.ok".IO ~~ :e {
-	 unlink  "/tmp/{$tm}.ok";
+	if  "/home/$user/{$tm}.ok".IO ~~ :e {
+	 unlink  "/home/$user/{$tm}.ok";
 	 say "RakuPlay: OK";
 
 	} else {
