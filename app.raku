@@ -64,6 +64,12 @@ my $application = route {
 
         my $is-error = False; my $error-message;
 
+        if  ! $description 
+        { 
+          $is-error = True;
+          $error-message = "One of input parameters (description) is not valid"
+        }
+
         if  $os ~~! /^^ \s* 'debian' || 'centos' || 'ubuntu' || 'alpine'  \s* $$ / 
         { 
           $is-error = True;
