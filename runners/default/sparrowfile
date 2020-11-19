@@ -37,7 +37,8 @@ if "/home/$user/rakuplay-{$rakudo-version}.ok".IO ~~ :f {
 	module-run 'Rakudo::Install', %(
 	  user => $user,
 	  rakudo-version => $rakudo-version,
-	  skip-install-dependencies => True
+	  skip-install-dependencies => True,
+    skip-zef => config()<skip-zef>,
 	);
 
 	bash Q|sed -i '2 i\($*OUT,$*ERR).map: {.out-buffer = 0}' $(which zef); echo $(which zef); cat $(which zef)|, %(

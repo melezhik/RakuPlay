@@ -9,6 +9,7 @@ sub queue-build ( %params ) is export {
   my $os = %params<os>;
   my $code = %params<code>;
   my $code-description = %params<description>;
+  my $skip-zef = %params<skip-zef>;
   my $modules = %params<modules>;
   my $rakudo_version = %params<rakudo_version> || "default";
   my $rakudo-version-mnemonic = %params<rakudo-version-mnemonic>;
@@ -34,7 +35,8 @@ sub queue-build ( %params ) is export {
 
   spurt "$effective-dir/config.pl6", "%(
     user => '$user',
-    rakudo_version => '$rakudo_version'
+    rakudo_version => '$rakudo_version',
+    skip-zef => $skip-zef, 
 );\n";
 
 

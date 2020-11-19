@@ -60,7 +60,7 @@ my $application = route {
         "2015.12" => "ec386e5ff54a6e8028e74092d1a41cfccdc531d2"
       );
 
-      request-body -> (:$code, :$modules, :$os = "debian", :$rakudo_version? = "default", :$sha?, :$client = "cli", :$description ) {
+      request-body -> (:$code, :$modules, :$os = "debian", :$rakudo_version? = "default", :$sha?, :$client = "cli", :$description, :$skip_zef = False ) {
 
         my $is-error = False; my $error-message;
 
@@ -121,7 +121,8 @@ my $application = route {
               modules => $modules, 
               rakudo_version => $rakudo-commit-version,
               rakudo-version-mnemonic => $rv,  
-              os => $os 
+              os => $os,
+              skip-zef => $skip_zef eq "on" ?? True !! False, 
             );
   
           }

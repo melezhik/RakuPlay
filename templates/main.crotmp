@@ -84,6 +84,14 @@
               </div>
             </div>
               <p class="help is-success">code to run</p>
+            <!-- <div class="field">
+              <label class="checkbox">
+                <div class="control">
+                  <input type="checkbox" name="skip_zef">
+                   Use system zef client 
+                  </label>
+                </div>
+            </div> -->
             <div class="field">
               <label class="label">Modules List</label>
               <div class="control">
