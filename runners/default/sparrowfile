@@ -126,9 +126,9 @@ if "files/code.raku".IO ~~ :e {
 	}
 
   if "/home/$user/code.{$tm}.raku.json".IO ~~ :e {
-    say "profile:";
-    say "/home/$user/code.{$tm}.raku.json".IO.slurp;
-    say "";
+    #say "profile:";
+    #say "/home/$user/code.{$tm}.raku.json".IO.slurp;
+    #say "";
     unlink "/home/$user/code.{$tm}.raku.json";
   }
 
