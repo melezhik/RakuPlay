@@ -126,7 +126,7 @@ if "files/code.raku".IO ~~ :e {
 	}
 
   if "/home/$user/code.{$tm}.raku.json".IO ~~ :e {
-    say "\n===\nSending Raku profile to public gist ...";
+    say "\n===\nSending Raku profile data to public gist ...";
     my $data =  "/home/$user/code.{$tm}.raku.json".IO.slurp;
     use JSON::Fast;
     my %data = %(
@@ -140,8 +140,9 @@ if "files/code.raku".IO ~~ :e {
     );
     "/home/$user/code.{$tm}.raku.json.gist".IO.spurt(to-json(%data));
     #say "";
-    bash "curl -s -d \@/home/$user/code.{$tm}.raku.json.gist  -H 'Accept: application/vnd.github.v3+json' -H 'Authorization: token 7034feb9327f81c1fc144792d2c96b7ed2c889f3' curl -s https://api.github.com/gists | grep html_url|head -n 1", %(
-     description => "publish Raku profile to github gist"
+    my $token = "d07bb7e09967f9594de75aa2e23802bbf9f9d695";
+    bash "curl -s https://api.github.com/gists -d \@/home/$user/code.{$tm}.raku.json.gist -D - -H 'Accept: application/vnd.github.v3+json' -H 'Authorization: token $token'|grep html_url|head -n 1", %(
+     description => "Publish Raku profile to github gist"
     );
     unlink "/home/$user/code.{$tm}.raku.json";
     unlink "/home/$user/code.{$tm}.raku.json.gist";
