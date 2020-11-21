@@ -80,10 +80,17 @@ if "files/code.raku".IO ~~ :e {
   	description => "raku version"
   );
 
-  bash "timeout 100 perl6 -e 'say EVALFILE qq[code.{$tm}.raku]' 1>{$tm}.stdout 2>{$tm}.stderr && echo > {$tm}.ok; : ", %(
+  if config()<with-profile> {
+     bash "timeout 100 perl6 --profile=code.{$tm}.raku.json -e 'say EVALFILE qq[code.{$tm}.raku]' 1>{$tm}.stdout 2>{$tm}.stderr && echo > {$tm}.ok; : ", %(
   	user => $user,
-	  description => "run raku code"
-  );
+	description => "run raku code"
+     );
+  } else {
+     bash "timeout 100 perl6 -e 'say EVALFILE qq[code.{$tm}.raku]' 1>{$tm}.stdout 2>{$tm}.stderr && echo > {$tm}.ok; : ", %(
+  	user => $user,
+	description => "run raku code"
+     );
+  }
 
   say "";
   say "executing code:";
@@ -117,6 +124,13 @@ if "files/code.raku".IO ~~ :e {
 	 say "RakuPlay: FAIL";
 	 exit(1); 
 	}
+
+  if "/home/$user/code.{$tm}.raku.json".IO ~~ :e {
+    say "profile:";
+    say "/home/$user/code.{$tm}.raku.json".IO.slurp;
+    say "";
+    unlink "/home/$user/code.{$tm}.raku.json";
+  }
 
 } else {
   say "no code passed, exiting ...";
