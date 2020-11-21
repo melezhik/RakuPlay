@@ -126,10 +126,25 @@ if "files/code.raku".IO ~~ :e {
 	}
 
   if "/home/$user/code.{$tm}.raku.json".IO ~~ :e {
-    #say "profile:";
-    #say "/home/$user/code.{$tm}.raku.json".IO.slurp;
+    say "\n===\nSending Raku profile to public gist ...";
+    my $data =  "/home/$user/code.{$tm}.raku.json".IO.slurp;
+    use JSON::Fast;
+    my %data = %(
+     description => "Raku profile data",
+     public => True,
+     files => {
+       "data.json" => {
+         "content" => $data
+       }
+     },
+    );
+    "/home/$user/code.{$tm}.raku.json.gist".IO.spurt(to-json(%data));
     #say "";
+    bash "curl -s -d \@/home/$user/code.{$tm}.raku.json.gist  -H 'Accept: application/vnd.github.v3+json' -H 'Authorization: token 7034feb9327f81c1fc144792d2c96b7ed2c889f3' curl -s https://api.github.com/gists | grep html_url|head -n 1", %(
+     description => "publish Raku profile to github gist"
+    );
     unlink "/home/$user/code.{$tm}.raku.json";
+    unlink "/home/$user/code.{$tm}.raku.json.gist";
   }
 
 } else {
