@@ -85,6 +85,13 @@
               <p class="help is-success">code to run</p>
             </div>
             <div class="field">
+              <label class="label">Use Profile</label>
+              <div class="control">
+                <input class="checkbox" type="checkbox" name="with_profile" placeholder="Use Raku profile">
+              </div>
+              <p class="help is-success">Generate Raku profile information</p>
+            </div>
+            <div class="field">
               <label class="label">Modules List</label>
               <div class="control">
                 <textarea class="textarea" type="text" name="modules" placeholder="Raku modules" rows="5"><.modules></textarea>
