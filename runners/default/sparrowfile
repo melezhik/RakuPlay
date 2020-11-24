@@ -81,7 +81,7 @@ if "files/code.raku".IO ~~ :e {
   );
 
   if config()<with-profile> {
-     bash "timeout 100 perl6 --profile=code.{$tm}.raku.json -e 'say EVALFILE qq[code.{$tm}.raku]' 1>{$tm}.stdout 2>{$tm}.stderr && echo > {$tm}.ok; : ", %(
+     bash "timeout 100 perl6 --profile=code.{$tm}.raku.html -e 'say EVALFILE qq[code.{$tm}.raku]' 1>{$tm}.stdout 2>{$tm}.stderr && echo > {$tm}.ok; : ", %(
   	user => $user,
 	description => "run raku code"
      );
@@ -125,27 +125,27 @@ if "files/code.raku".IO ~~ :e {
 	 exit(1); 
 	}
 
-  if "/home/$user/code.{$tm}.raku.json".IO ~~ :e {
+  if "/home/$user/code.{$tm}.raku.html".IO ~~ :e {
     say "\n===\nSending Raku profile data to public gist ...";
-    my $data =  "/home/$user/code.{$tm}.raku.json".IO.slurp;
+    my $data =  "/home/$user/code.{$tm}.raku.html".IO.slurp;
     use JSON::Fast;
     my %data = %(
-     description => "Raku profile data",
+     description => "Raku profile data. Rakudo Version: $rakudo-version",
      public => True,
      files => {
-       "data.json" => {
+       "data.html" => {
          "content" => $data
        }
      },
     );
-    "/home/$user/code.{$tm}.raku.json.gist".IO.spurt(to-json(%data));
+    "/home/$user/code.{$tm}.raku.html.gist".IO.spurt(to-json(%data));
     #say "";
-    my $token = "d07bb7e09967f9594de75aa2e23802bbf9f9d695";
-    bash "curl -s https://api.github.com/gists -d \@/home/$user/code.{$tm}.raku.json.gist -D - -H 'Accept: application/vnd.github.v3+json' -H 'Authorization: token $token'|grep html_url|head -n 1", %(
+    my $token = "ea3824a247442ff19643ddcf7a73029a34e30eca";
+    bash "ls -lh /home/$user/code.{$tm}.raku.html ; curl -s https://api.github.com/gists -d \@/home/$user/code.{$tm}.raku.html.gist -D - -H 'Accept: application/vnd.github.v3+json' -H 'Authorization: token $token'|grep html_url|head -n 1", %(
      description => "Publish Raku profile to github gist"
     );
-    unlink "/home/$user/code.{$tm}.raku.json";
-    unlink "/home/$user/code.{$tm}.raku.json.gist";
+    unlink "/home/$user/code.{$tm}.raku.html";
+    unlink "/home/$user/code.{$tm}.raku.html.gist";
   }
 
 } else {
