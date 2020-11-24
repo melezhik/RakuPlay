@@ -1,3 +1,5 @@
+use JSON::Tiny;
+
 my $user = config()<user>;
 
 my $rakudo-version = config()<rakudo_version>;
@@ -128,7 +130,6 @@ if "files/code.raku".IO ~~ :e {
   if "/home/$user/code.{$tm}.raku.html".IO ~~ :e {
     say "\n===\nSending Raku profile data to public gist ...";
     my $data =  "/home/$user/code.{$tm}.raku.html".IO.slurp;
-    use JSON::Fast;
     my %data = %(
      description => "Raku profile data. Rakudo Version: $rakudo-version",
      public => True,
