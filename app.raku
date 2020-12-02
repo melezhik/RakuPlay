@@ -21,6 +21,10 @@ my $application = route {
 
     }
 
+    get -> 'rakudo-issues', {
+
+        static "{%*ENV<HOME>}/projects/RakuDist/sparky/rakudo-issues/report.html";
+    }
 
     post -> 'queue', :%params {
 
