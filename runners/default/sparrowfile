@@ -83,14 +83,14 @@ if "files/code.raku".IO ~~ :e {
   );
 
   if config()<with-profile> {
-     bash "timeout 100 perl6 --profile=code.{$tm}.raku.html -e 'say EVALFILE qq[code.{$tm}.raku]' 1>{$tm}.stdout 2>{$tm}.stderr && echo > {$tm}.ok; : ", %(
-  	user => $user,
-	description => "run raku code"
+      bash "timeout 100 perl6 --profile=code.{$tm}.raku.json -e 'say EVALFILE qq[code.{$tm}.raku]' 1>{$tm}.stdout 2>{$tm}.stderr && echo > {$tm}.ok; : ", %(
+    	user => $user,
+	    description => "run raku code"
      );
   } else {
      bash "timeout 100 perl6 -e 'say EVALFILE qq[code.{$tm}.raku]' 1>{$tm}.stdout 2>{$tm}.stderr && echo > {$tm}.ok; : ", %(
-  	user => $user,
-	description => "run raku code"
+  	    user => $user,
+	      description => "run raku code"
      );
   }
 
@@ -109,6 +109,7 @@ if "files/code.raku".IO ~~ :e {
    say "stderr:";
    say "/home/$user/{$tm}.stderr".IO.slurp;
    say "";
+
   }
 
   unlink "/home/$user/{$tm}.stdout" if "/home/$user/{$tm}.stdout".IO ~~ :e;
