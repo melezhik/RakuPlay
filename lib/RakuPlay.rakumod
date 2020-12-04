@@ -31,7 +31,7 @@ sub queue-build ( %params ) is export {
 
   copy "runners/default/sparrowfile", "{$effective-dir}/sparrowfile";
 
-  shell "cp -r issues/* $effective-dir/files";
+  shell "cp -r {%*ENV<PWD>}/issues/* $effective-dir/files";
 
   spurt "$effective-dir/files/code.raku", $code;
 
