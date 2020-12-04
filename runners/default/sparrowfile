@@ -69,6 +69,8 @@ if "files/Rakufile".IO ~~ :f {
   }
 }
 
+shell "cp -r files/issues /home/$user/";
+
 if "files/code.raku".IO ~~ :e {
 
   my $tm = "rakuplay-{time}";	
