@@ -100,16 +100,15 @@ if "files/code.raku".IO ~~ :e {
   say "";
 
   if "/home/$user/{$tm}.stdout".IO ~~ :e {
-   say "stdout:";
-   say "/home/$user/{$tm}.stdout".IO.slurp;
-   say "";
+    say "stdout:";
+    say "/home/$user/{$tm}.stdout".IO.slurp;
+    say "";
   }
 
   if "/home/$user/{$tm}.stderr".IO ~~ :e {
-   say "stderr:";
-   say "/home/$user/{$tm}.stderr".IO.slurp;
-   say "";
-
+    say "stderr:";
+    say "/home/$user/{$tm}.stderr".IO.slurp;
+    say "";
   }
 
   unlink "/home/$user/{$tm}.stdout" if "/home/$user/{$tm}.stdout".IO ~~ :e;
