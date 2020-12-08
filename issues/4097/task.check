@@ -1,11 +1,12 @@
 # user	0m2.020s
 regexp: real	\s+ '0m' (\d+ '.' \d+) s
 
-code: <<CODE
+generator: <<CODE
 !perl6
 
-say captures()[0][0];
-say captures()[1][0];
+my $a  = + "{captures()[0][0]}";
+my $b = +  "{captures()[1][0]}";
 
+say "asset: ", ( ( $b - $a ) / $b ) * 100 > 50 ?? 0 !! 1 , " less then 50 difference";
 CODE
 
