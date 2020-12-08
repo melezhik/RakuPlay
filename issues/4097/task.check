@@ -1,0 +1,11 @@
+# user	0m2.020s
+regexp: real	\s+ '0m' (\d+ '.' \d+) s
+
+code:<<CODE
+!perl6
+
+say captures()[0][0];
+say captures()[1][0];
+
+CODE
+
