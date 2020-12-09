@@ -7,6 +7,6 @@ generator: <<CODE
 my $a  = + "{captures()[0][0]}";
 my $b = +  "{captures()[1][0]}";
 
-say "assert: ", ( ( $b - $a ) / $b ) * 100 > 50 ?? 0 !! 1 , " less then 50 difference";
+say "assert: ", abs( ( $b - $a ) / $b ) * 100 > 50 ?? 0 !! 1 , " a performance decrease no more then 50%";
 CODE
 
