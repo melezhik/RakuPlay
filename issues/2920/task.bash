@@ -1,5 +1,3 @@
-#set -x
-
 set -e
 raku --version
 

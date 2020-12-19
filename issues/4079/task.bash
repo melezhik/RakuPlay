@@ -1,5 +1,6 @@
-set -x
 set -e
+
+cat $root_dir/task.bash
 
 touch file.txt
 
