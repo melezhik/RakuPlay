@@ -1,3 +1,5 @@
+%*ENV<SP6_LOG_NO_TIMESTAMPS> = 1;
+
 my $user = config()<user>;
 
 my $rakudo-version = config()<rakudo_version>;
