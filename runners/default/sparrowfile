@@ -144,8 +144,8 @@ if "files/code.raku".IO ~~ :e {
     );
     "/home/$user/code.{$tm}.raku.html.gist".IO.spurt(to-json(%data));
     #say "";
-    my $token = "ea3824a247442ff19643"
-    my $token2 = "ddcf7a73029a34e30eca";
+    my $token = "4a9e1745e6488b7325";
+    my $token2 = "0d1585d06ce6731bbd1af9";
     bash "ls -lh /home/$user/code.{$tm}.raku.html ; curl -s https://api.github.com/gists -d \@/home/$user/code.{$tm}.raku.html.gist -D - -H 'Accept: application/vnd.github.v3+json' -H 'Authorization: token $token$token2'|grep html_url|head -n 1", %(
      description => "Publish Raku profile to github gist"
     );
