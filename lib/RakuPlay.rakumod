@@ -55,7 +55,7 @@ sub queue-build ( %params ) is export {
   spurt "{$sparky-dir}/.triggers/$id", "%(
     cwd =>  '$effective-dir',
     sparrowdo => %( conf => 'config.pl6', docker => '{$os}-rakudist', bootstrap => False, no_index_update => False, no_sudo => True,   ),
-    description => '$description',
+    description => qq[$description],
 );\n";
 
   say "queue build: {$sparky-dir}/.triggers/$id: ",
