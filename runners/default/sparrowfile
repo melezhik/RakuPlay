@@ -78,7 +78,12 @@ if "files/code.raku".IO ~~ :e {
 
   my $tm = "rakuplay-{time}";	
 
-  copy  "files/code.raku", "/home/$user/code.{$tm}.raku";
+  # copy  "files/code.raku", "/home/$user/code.{$tm}.raku";
+  
+  file "/home/$user/code.{$tm}.raku", %(
+    owner => $user,
+    source => "files/code.raku"
+  );
 
   bash "perl6 --version ", %(
   	user => $user,
