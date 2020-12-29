@@ -80,7 +80,7 @@ if "files/code.raku".IO ~~ :e {
 
   # copy  "files/code.raku", "/home/$user/code.{$tm}.raku";
   
-  file "/home/$user/code.{$tm}.raku", %(
+  file-create "/home/$user/code.{$tm}.raku", %(
     owner => $user,
     source => "files/code.raku"
   );
