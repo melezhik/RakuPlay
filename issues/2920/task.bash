@@ -1,5 +1,4 @@
 set -e
-raku --version
 
 cat $root_dir/task.bash
 
