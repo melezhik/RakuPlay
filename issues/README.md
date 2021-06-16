@@ -5,7 +5,7 @@ R2T2 (maybe I need to come up with better name? :-)
 # Installation
 
 ```bash
-zef install --/test https://github.com/melezhik/Sparrow6 https://github.com/melezhik/Tomtit https://github.com/melezhik/Tomty
+zef install --/test https://github.com/melezhik/Sparrow6.git https://github.com/melezhik/Tomtit https://github.com/melezhik/Tomty.git
 s6 --repo-init ~/repo
 s6 --index-update
 ```
