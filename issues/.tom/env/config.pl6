@@ -13,6 +13,7 @@
     4124 => %( tag => [ 'open' ] ),
     4266 => %( tag => [ 'regression' ] ),
     4363 => %( tag => [ 'regression' ] ),
+    4369 => %( tag => [ 'regression' ] ),
   )
 }
 
