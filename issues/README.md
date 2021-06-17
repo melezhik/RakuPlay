@@ -1,6 +1,6 @@
-# Rakudo Releases Test Tracker
+# Rakudo Releases Readiness Tool
 
-R2T2 (maybe I need to come up with better name? :-)
+Aka R3 Tool (maybe I need to come up with better name? :-)
 
 # Installation
 
@@ -23,11 +23,17 @@ cd RakuPlay/issues
 tomty --color --all --show-failed
 ```
 
-
 # Tests groups
 
 One can run various test groups
 
+Examples:
+
+Certain issue:
+
+```bash
+tomty --color 4369
+```
 Only open, unfixed issues:
 
 ```bash
@@ -40,7 +46,7 @@ Only old fixed issues:
 tomty --only=regression --color --show-failed
 ```
 
-To see available groups, say
+To see available groups, say:
 
 ```
 tom tags
